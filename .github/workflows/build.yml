@@ -1,0 +1,19 @@
+name: build
+on: [push]
+jobs:
+  build-uboot-and-dtbs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Build
+        run: |
+          docker run --rm \
+              -v "${{ github.workspace }}":"/github/workspace" \
+              registry.gitlab.com/zelberor/docker-arm-crosscompiler/arm-unknown-linux-gnueabihf:2022-12-10 \
+              /github/workspace/build.sh
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: uboot-and-dtbs
+          path: ${{ github.workspace }}/output
