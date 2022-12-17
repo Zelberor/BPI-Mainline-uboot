@@ -2,6 +2,8 @@
 
 set -e
 
+nproc=$(cat /proc/cpuinfo | grep processor | wc -l )
+
 BPIBOARD=bpi-m2m
 MODE=$1
 
@@ -39,6 +41,6 @@ export KBUILD_OUTPUT
 mkdir -p $KBUILD_OUTPUT
 export CROSS_COMPILE=arm-linux-gnueabihf-
 make $NEWBPICONF
-make -j8
+make -j${nproc}
 ./bpi-uimgz.sh $BOARD
 

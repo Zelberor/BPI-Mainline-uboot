@@ -2,6 +2,8 @@
 
 set -e
 
+nproc=$(cat /proc/cpuinfo | grep processor | wc -l )
+
 BPIBOARD=bpi-m2p-h5
 MODE=$1
 
@@ -46,6 +48,6 @@ export BL31
 (cd `pwd`/../arm-trusted-firmware/sunxi ; ./bpi-sunxi64.sh)
 
 make $NEWBPICONF
-make -j8
+make -j${nproc}
 ./bpi-uimgz.sh $BOARD
 

@@ -5,4 +5,4 @@ export KBUILD_OUTPUT=output/dtbs
 mkdir -p $KBUILD_OUTPUT
 
 make bpi_defconfig
-make -j$nproc dtbs
+make -j${nproc} dtbs
